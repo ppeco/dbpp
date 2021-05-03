@@ -1,6 +1,6 @@
 {
     "name": "levkopo/dbpp",
-    "description": "Library for busy using PDO",
+    "description": "The library makes working with database easier and simpler",
     "type": "library",
     "license": "MIT",
     "authors": [
