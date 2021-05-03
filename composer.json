@@ -1,0 +1,21 @@
+{
+    "name": "levkopo/dbpp",
+    "description": "Library for busy using PDO",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "levkopo",
+            "email": "40952805+levkopo@users.noreply.github.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "dbpp\\": "src/dbpp"
+        }
+    },
+    "require": {
+        "php": ">=8.0",
+        "ext-pdo": "*"
+    }
+}
