@@ -6,7 +6,7 @@ dbpp requires composer and php 8.0 or higher.
 
 For installation run this command in composer:
 ```
-composer require levkopo/dbpp
+composer require ppeco/dbpp
 ```
 
 ## Usage
