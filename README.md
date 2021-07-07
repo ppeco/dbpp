@@ -5,7 +5,7 @@ dbpp is a library that simplifies database queries by collecting them into one c
 dbpp requires composer and php 8.0 or higher.
 
 For installation run this command in composer:
-```
+```shell
 composer require ppeco/dbpp
 ```
 
