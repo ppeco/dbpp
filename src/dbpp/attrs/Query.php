@@ -9,7 +9,7 @@ use PDO;
 #[Attribute]
 class Query {
     public function __construct(
-        private string $query
+        protected string $query
     ) {}
 
     public function execute(PDO $pdo, array $args): mixed {

@@ -5,54 +5,24 @@ namespace dbpp;
 
 
 use ArrayObject;
-use dbpp\attrs\Query;
+use JetBrains\PhpStorm\Deprecated;
 use PDO;
-use ReflectionClass;
 use ReflectionException;
 use ReflectionNamedType;
-use ReflectionProperty;
 use ReflectionType;
 use ReflectionUnionType;
 
 class DBPP {
-    public static function init(Database $database, PDO $pdo): void {
-        $class = new ReflectionClass($database);
-        $properties = $class->getProperties(ReflectionProperty::IS_PUBLIC);
+    #[Deprecated("Use your database constructor")]
+    public static function init(Database $database, PDO $pdo): void {}
 
-        foreach($properties as $property){
-            $database->{$property->getName()} = self::initDao($property->getType()->getName(), $pdo);
-        }
-    }
+    #[Deprecated("Use your database constructor")]
+    public static function initDao(string $classname, PDO $pdo): object { return new $classname($pdo); }
 
     /**
      * @throws ReflectionException
+     * @throws DBPPException
      */
-    private static function initDao(string $classname, PDO $pdo): object {
-        $class = new ReflectionClass($classname);
-
-        return new $classname(function(string $name, array $arguments) use($class, $pdo) {
-            $function = $class->getMethod($name);
-            $response = false;
-
-            foreach($function->getAttributes() as $attribute){
-                if(class_exists($attribute->getName())){
-                    $attribute = $attribute->newInstance();
-                    if($attribute instanceof Query) {
-                        $args = [];
-                        for($i = 0, $iMax = count($arguments); $i < $iMax; $i++) {
-                            $args[$function->getParameters()[$i]->getName()] = $arguments[$i];
-                        }
-
-                        $response = $attribute->execute($pdo, $args);
-                        break;
-                    }
-                }
-            }
-
-            return DBPP::getValueByType($function->getReturnType(), $response);
-        });
-    }
-
     public static function getValueByType(ReflectionType $type, mixed $value): mixed{
         if($type instanceof ReflectionNamedType){
             $value = self::getValueByNamedType($type, $value);
@@ -74,14 +44,11 @@ class DBPP {
             }
         }
 
-        throw new ClassCastException("The function requires dbpp to return string, ".
+        throw new DBPPException("The function requires dbpp to return string, ".
             "but dbpp cannot do this. ".
             "Add to return type |bool or set return type array|bool");
     }
 
-    /**
-     * @throws ReflectionException
-     */
     private static function getValueByNamedType(ReflectionNamedType $type, mixed $value): mixed {
         return match($type->getName()){
             "bool" => $value!==false,
