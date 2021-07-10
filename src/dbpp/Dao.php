@@ -38,7 +38,7 @@ abstract class Dao {
                 }
             }
 
-            return DBPP::getValueByType($method->getReturnType(), $response);
+            return Utils::getValueByType($method->getReturnType(), $response);
         } catch (ReflectionException) {}
 
         return $response;
