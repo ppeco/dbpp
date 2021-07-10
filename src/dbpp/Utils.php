@@ -45,6 +45,7 @@ class Utils {
             "object" => is_array($value)?new ArrayObject($value):null,
             "mixed" => $value,
             "false" => $value===false?false:null,
+            "int" => is_array($value)&&count($value)==1&&is_int($value[0])?$value[0]:null,
 
             default => null
         };
