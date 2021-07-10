@@ -18,7 +18,7 @@ class Update extends Query {
         parent::__construct($query);
     }
 
-    public function execute(PDO $pdo, array $args): mixed {
+    public function execute(PDO $pdo, array $args): bool {
         return ($stmt = $pdo->prepare($this->query))
             &&$stmt->execute($args);
     }
