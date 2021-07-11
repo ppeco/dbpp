@@ -16,7 +16,7 @@ class Insert extends Query {
         parent::__construct($query);
     }
 
-    public function execute(PDO $pdo, array $args): mixed {
+    public function execute(PDO $pdo, array $args): array|bool {
         if(($stmt = $pdo->prepare($this->query))
             &&$stmt->execute($args)) {
             $response = [];
