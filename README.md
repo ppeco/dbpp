@@ -59,11 +59,10 @@ class SimpleDatabase extends Database {
 ```
 
 Well, the final steps. 
-Create PDO object and call static method from DBPP: init
+Create PDO object and create Database class
 ```php
 $pdo = new PDO(*data*);
-$database = new SimpleDatabase();
-DBPP::init($database, $pdo);
+$database = new SimpleDatabase($pdo);
 ```
 
 Now you can call methods from the Database class
