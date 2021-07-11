@@ -20,8 +20,9 @@ class Insert extends Query {
         if(($stmt = $pdo->prepare($this->query))
             &&$stmt->execute($args)) {
             $response = [];
+
             foreach($this->keys as $key)
-                $response[] = $key;
+                $response[] = $pdo->lastInsertId($key);
 
             return $response;
         }
