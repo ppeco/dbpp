@@ -34,19 +34,19 @@ Functions should call a function from parent (IDE may throw an error, but don't 
 
 ```php
 class TableDao extends Dao {
-    #[Query("SELECT * FROM `table`")
+    #[Query("SELECT * FROM `table`")]
     public function getAll(): array|false {
-        parent::getAll();
+        return parent::getAll();
     }
     
-    #[Query("SELECT * FROM `table` WHERE `id` = :id")
-    public function getById(int $id){
-        parent::getAll($id);
+    #[Query("SELECT * FROM `table` WHERE `id` = :id")]
+    public function getById(int $id): array|false {
+        return parent::getAll($id);
     }
     
-    #[Insert("table")
-    public function insert(Value $value): bool{
-        parent::insert($value);
+    #[Insert("INSERT `table`(`id`, `name`) VALUES(NULL, :name)")]
+    public function insert(string $name): bool {
+        return parent::insert($name);
     }
 }
 ```
