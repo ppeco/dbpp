@@ -41,12 +41,17 @@ class TableDao extends Dao {
     
     #[Query("SELECT * FROM `table` WHERE `id` = :id")]
     public function getById(int $id): array|false {
-        return parent::getAll($id);
+        return parent::getById($id);
     }
     
     #[Insert("INSERT `table`(`id`, `name`) VALUES(NULL, :name)")]
     public function insert(string $name): bool {
         return parent::insert($name);
+    }
+
+    #[Insert("INSERT `table`(`id`, `name`) VALUES(NULL, :name)", ['id'])]
+    public function insert2(string $name): int|bool {
+        return parent::insert2($name);
     }
 }
 ```
