@@ -20,6 +20,6 @@ class Update extends Query {
 
     public function execute(PDO $pdo, array $args): bool {
         return ($stmt = $pdo->prepare($this->query))
-            &&$stmt->execute($args);
+            &&$this->bindValues($stmt, $args);
     }
 }
