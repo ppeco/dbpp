@@ -30,7 +30,7 @@ class Query {
                 $type = PDO::PARAM_INT;
             }
 
-            if($statement->bindValue($key, $value, $type))
+            if(!$statement->bindValue($key, $value, $type))
                 return false;
         }
 
