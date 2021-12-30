@@ -13,9 +13,10 @@ class Query {
         protected string $query
     ) {}
 
-    public function execute(PDO $pdo, array $args): mixed {
+    public function execute(PDO $pdo, array $args): array|bool {
         if(($stmt = $pdo->prepare($this->query))
-                &&$this->bindValues($stmt, $args)) {
+                &&$this->bindValues($stmt, $args)
+                &&$stmt->execute()) {
             return $stmt->fetchAll();
         }
 
@@ -29,7 +30,8 @@ class Query {
                 $type = PDO::PARAM_INT;
             }
 
-            $statement->bindValue($key, $value, $type);
+            if($statement->bindValue($key, $value, $type))
+                return false;
         }
 
         return true;

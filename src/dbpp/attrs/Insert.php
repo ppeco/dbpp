@@ -18,7 +18,8 @@ class Insert extends Query {
 
     public function execute(PDO $pdo, array $args): array|bool {
         if(($stmt = $pdo->prepare($this->query))
-            &&$this->bindValues($stmt, $args)) {
+            &&$this->bindValues($stmt, $args)
+            &&$stmt->execute()) {
             $response = [];
 
             foreach($this->keys as $key)
