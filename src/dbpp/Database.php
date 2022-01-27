@@ -38,8 +38,9 @@ abstract class Database {
             $argsDefArray = [];
             foreach ($method->getParameters() as $parameter) {
                 $argsDef[] = ($parameter->getType() ?: "") . "$" .$parameter->name;
-                $argsDefArray[] = "\"$parameter->name\"=>\$$parameter->name";
+                $argsDefArray[] = "\$$parameter->name";
             }
+
 
             $classDef .= "public function $method->name(".implode(",", $argsDef)."):{$method->getReturnType()}{".
                 "return \$this->__call(\"$method->name\", [".implode(",", $argsDefArray)."]);}";

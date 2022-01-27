@@ -23,11 +23,15 @@ abstract class Dao {
         $response = false;
         try {
             $method = $this->class->getMethod($name);
+            if($method->getPrototype()->isAbstract())
+                $method = $method->getPrototype();
+
             foreach($method->getAttributes() as $attribute){
                 if(class_exists($attribute->getName())){
                     $attribute = $attribute->newInstance();
                     if($attribute instanceof Query) {
                         $args = [];
+
                         for($i = 0, $iMax = count($arguments); $i < $iMax; $i++) {
                             $args[$method->getParameters()[$i]->getName()] = $arguments[$i];
                         }
@@ -38,9 +42,8 @@ abstract class Dao {
                 }
             }
 
-            return Utils::getValueByType($method->getReturnType(), $response);
         } catch (ReflectionException) {}
 
-        return $response;
+        return Utils::getValueByType($method->getReturnType(), $response);
     }
 }
