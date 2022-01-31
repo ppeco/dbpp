@@ -30,29 +30,21 @@ class TableDao extends Dao {
 
 Create functions with query annotations from dbpp.
 They can be Query and Insert.
-Functions should call a function from parent (IDE may throw an error, but don't worry).
+Functions should call a function from parent.
 
 ```php
-class TableDao extends Dao {
+abstract class TableDao extends Dao {
     #[Query("SELECT * FROM `table`")]
-    public function getAll(): array|false {
-        return parent::getAll();
-    }
+    public abstract function getAll(): array|false;
     
     #[Query("SELECT * FROM `table` WHERE `id` = :id")]
-    public function getById(int $id): array|false {
-        return parent::getById($id);
-    }
+    public abstract function getById(int $id): array|false;
     
     #[Insert("INSERT `table`(`id`, `name`) VALUES(NULL, :name)")]
-    public function insert(string $name): bool {
-        return parent::insert($name);
-    }
+    public abstract function insert(string $name): bool;
 
     #[Insert("INSERT `table`(`id`, `name`) VALUES(NULL, :name)", ['id'])]
-    public function insert2(string $name): int|bool {
-        return parent::insert2($name);
-    }
+    public abstract function insert2(string $name): int|bool;
 }
 ```
 
